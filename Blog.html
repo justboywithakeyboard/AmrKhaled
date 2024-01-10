@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amr's Blog</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
             background-color: #f9f9f9;
@@ -45,7 +46,8 @@
         }
 
         .search-bar {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            position: relative;
         }
 
         .search-input {
@@ -54,6 +56,24 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             box-sizing: border-box;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
 
         .blog-post {
@@ -67,34 +87,44 @@
 
         .blog-post-header {
             padding: 20px;
-            background-color: #ffffff;
-            color: #ffffff;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .blog-post:hover .blog-post-header {
+            background-color: #0056b3;
         }
 
         .blog-post-title {
             color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .blog-post:hover .blog-post-title {
+            color: #fff;
         }
 
         .blog-post-arrow {
-            color: #007bff;
+            color: #fff;
         }
 
         .blog-post-content {
             padding: 20px;
-            display: none;
-        }
-
-        .blog-post.open {
-            height: 100vh;
-            overflow-y: scroll;
+            max-height: 0;
+            overflow: hidden;
+            background-color: #007bff; /* Blue background under the trigger */
+            color: #fff; /* White text in the content */
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            transition: max-height 0.3s ease, padding 0.3s ease, background-color 0.3s ease, color 0.3s ease;
         }
 
         .blog-post.open .blog-post-content {
-            display: block;
+            max-height: 500px; /* Adjust as needed */
+            padding: 20px;
         }
 
         h1, h2, h3 {
@@ -124,11 +154,14 @@
 
     <div class="content">
         <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Search in posts...">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search in posts..." oninput="searchPosts()">
+            <button class="search-btn" onclick="searchPosts()">
+                <i class="fas fa-search"></i>
+            </button>
         </div>
 
         <div class="blog-post closed">
-            <div class="blog-post-header">
+            <div class="blog-post-header" onclick="togglePost(this)">
                 <h3 class="blog-post-title">Post 1</h3>
                 <i class="fas fa-arrow-down blog-post-arrow"></i>
             </div>
@@ -138,7 +171,7 @@
         </div>
 
         <div class="blog-post closed">
-            <div class="blog-post-header">
+            <div class="blog-post-header" onclick="togglePost(this)">
                 <h3 class="blog-post-title">Post 2</h3>
                 <i class="fas fa-arrow-down blog-post-arrow"></i>
             </div>
@@ -148,7 +181,7 @@
         </div>
 
         <div class="blog-post closed">
-            <div class="blog-post-header">
+            <div class="blog-post-header" onclick="togglePost(this)">
                 <h3 class="blog-post-title">Post 3</h3>
                 <i class="fas fa-arrow-down blog-post-arrow"></i>
             </div>
@@ -162,22 +195,35 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        function togglePost(postHeader) {
+            var post = postHeader.parentElement;
+            var content = post.querySelector('.blog-post-content');
+            var isOpen = post.classList.contains('open');
+
+            if (isOpen) {
+                content.style.maxHeight = '0';
+                post.classList.remove('open');
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                post.classList.add('open');
+            }
+        }
+
+        function searchPosts() {
+            var searchTerm = document.getElementById('searchInput').value.toLowerCase();
             var blogPosts = document.querySelectorAll('.blog-post');
 
             blogPosts.forEach(function (post) {
-                var postHeader = post.querySelector('.blog-post-header');
-                postHeader.addEventListener('click', function () {
-                    blogPosts.forEach(function (otherPost) {
-                        if (otherPost !== post && otherPost.classList.contains('open')) {
-                            otherPost.classList.remove('open');
-                        }
-                    });
+                var postContent = post.querySelector('.blog-post-content');
+                var contentText = postContent.textContent.toLowerCase();
 
-                    post.classList.toggle('open');
-                });
+                if (contentText.includes(searchTerm)) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
             });
-        });
+        }
     </script>
 </body>
 </html>
