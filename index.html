@@ -7,17 +7,25 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+        }
+
         body {
-            background-color: #f9f9f9;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         header {
             text-align: center;
             padding: 40px 0;
-            background-color: #007bff;
+            background-color: var(--primary-color);
             color: #fff;
         }
 
@@ -57,17 +65,22 @@
 
         .navigation-line {
             height: 5px;
-            background-color: #0056b3;
+            background-color: var(--secondary-color);
             margin-bottom: 20px;
         }
 
         .navigation-options {
             text-align: center;
             margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-color);
+            z-index: 1000;
+            padding: 10px 0;
         }
 
         .navigation-options a {
-            color: #333;
+            color: var(--text-color);
             text-decoration: none;
             padding: 10px 20px;
             margin: 0 10px;
@@ -76,17 +89,17 @@
         }
 
         .navigation-options a:hover {
-            background-color: #007bff;
+            background-color: var(--primary-color);
             color: #fff;
         }
 
         .content {
-            margin: 20px auto; /* Centering content */
-            max-width: 800px; /* Adjust as needed */
+            margin: 20px auto;
+            max-width: 800px;
         }
 
         section {
-            margin: 20px auto; /* Centering sections */
+            margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -98,7 +111,7 @@
         section.closed {
             max-height: 50px;
             padding: 0 20px;
-            margin: 0 auto; /* Centering closed sections */
+            margin: 0 auto;
             overflow: hidden;
         }
 
@@ -108,7 +121,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            color: #007bff;
+            color: var(--primary-color);
         }
 
         section h2::after {
@@ -123,25 +136,25 @@
         }
 
         h1, h2, h3 {
-            color: #007bff;
+            color: var(--primary-color);
         }
 
         a {
-            color: #333;
+            color: var(--text-color);
             text-decoration: none;
         }
 
         a:hover {
-            color: #007bff;
+            color: var(--primary-color);
         }
 
         .contact-box {
-            margin: 20px auto; /* Centering contact box */
+            margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px; /* Adjust as needed */
+            max-width: 800px;
         }
 
         .contact-info {
@@ -155,7 +168,7 @@
             display: flex;
             align-items: center;
             text-decoration: none;
-            color: #333;
+            color: var(--text-color);
             margin-bottom: 10px;
         }
 
